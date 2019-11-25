@@ -16,7 +16,13 @@ C'est une série multivariée composée de sept variables (en plus de la date et
 8. sub_metering_2: energy sub-metering No. 2 (in watt-hour of active energy). It corresponds to the laundry room, containing a washing-machine, a tumble-drier, a refrigerator and a light. 
 9. sub_metering_3: energy sub-metering No. 3 (in watt-hour of active energy). It corresponds to an electric water-heater and an air-conditioner.
 
-## Nettoyer les données
+## Objectif
+
+Je veux créer un modèle de Machine Learning à résoudre un problème.
+
+**Quelle est la consommation électrique prévue pour la semaine à venir?** 
+
+## Nettoyage les données
 
 D'abord, je **fusionne les prémière et deuxième colonnes dans une colonne**. La nouvelle colonne doit être dans le format `datetime`. Elle est aussi l'indice de données. C'est pour facilité de traitement.
 
@@ -30,3 +36,16 @@ A la fin, je **créer la colonne `Sub_metering_4`**. Dans les informations, il a
 
 Les données nettoyées sont présenté ici.
 <img src="./data/output/images/cleaned_data.png">
+
+## Visualisation des données
+
+Je suis intéressé par la somme de consommation de chaque jour car je veux prevoir celle pour la semaine à venir. Donc, je groupe des données par jour, et sauvegarder le résultat.
+
+Ensuite, j'analyse la saisonnalité et le pattern de consommation dans une semaine de `Global_active_power`. C'est intéressant de faire la même chose pour `Global_reactive_power`,`Voltage` et `Global_intensity` si on a le temps.
+
+<img src="./data/output/images/gap_days_all_years.png">
+<img src="./data/output/images/gap_days_all_weeks.png">
+
+D'ailleurs, je aussi analyser le même chose pour `Sub_metering`. On veut bien la saisonnalité de `Sub_metering 3 et 4`.
+
+<img src='./data/output/images/sub_metering_days_all_years.png'>
