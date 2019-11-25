@@ -11,6 +11,12 @@ df.replace('?', np.nan, inplace=True)
 df = df.astype('float64')
 
 def remplir_donnees(values):
+    '''
+    remplir les données pour celles de la même heure la veille.
+
+    Parameters:
+    -- values - un np.array avec 2 dimensions 
+    '''
     one_day = 60 * 24
     for row in range(values.shape[0]):
         for col in range(values.shape[1]):

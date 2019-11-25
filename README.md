@@ -43,9 +43,18 @@ Je suis intéressé par la somme de consommation de chaque jour car je veux prev
 
 Ensuite, j'analyse la saisonnalité et le pattern de consommation dans une semaine de `Global_active_power`. C'est intéressant de faire la même chose pour `Global_reactive_power`,`Voltage` et `Global_intensity` si on a le temps.
 
-<img src="./data/output/images/gap_days_all_years.png">
-<img src="./data/output/images/gap_days_all_weeks.png">
+![](./data/output/images/gap_days_all_years.png)  ![](./data/output/images/gap_days_all_weeks.png)
 
-D'ailleurs, je aussi analyser le même chose pour `Sub_metering`. On veut bien la saisonnalité de `Sub_metering 3 et 4`.
+D'ailleurs, je aussi analyse le même chose pour `Sub_metering`. On veut bien la saisonnalité de `Sub_metering 3 et 4`.
 
 <img src='./data/output/images/sub_metering_days_all_years.png'>
+
+## Création du modèle de Machine Learning
+
+Je veux créer un modèle de Machine Learning à predire la consommation électrique prévue pour la semaine à venir.
+
+### diviser un ensemble de données en ensembles train / test
+
+Je vais utiliser les données des trois premières années pour l'entrainement du modèle et la dernière année pour l'évaluation du modèle.
+
+Les données d'un ensemble de données seront divisées en semaines. Ce sont des semaines qui commencent un dimanche et se terminent un samedi. Donc, pour l'ensemble de train, il y a 159 semaines, et l'ensemble de test a 46 semaines.
