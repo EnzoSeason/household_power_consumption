@@ -17,3 +17,16 @@ C'est une série multivariée composée de sept variables (en plus de la date et
 9. sub_metering_3: energy sub-metering No. 3 (in watt-hour of active energy). It corresponds to an electric water-heater and an air-conditioner.
 
 ## Nettoyer les données
+
+D'abord, je **fusionne les prémière et deuxième colonnes dans une colonne**. La nouvelle colonne doit être dans le format `datetime`. Elle est aussi l'indice de données. C'est pour facilité de traitement.
+
+Ensuite, je **remplis les valeurs manquantes**. Dans les informations des données, il a indiqué qu'il y a les values manquantes.
+
+<img src="./data/output/images/missing_value.png">
+
+Donc, je replace `?` par `NaN`. Après, je transforme tous les valeurs numériques dans le format `float`, et remplis ces valeurs manquantes par les mêmes données de la même heure la veille.
+
+A la fin, je **créer la colonne `Sub_metering_4`**. Dans les informations, il a aussi indiqué que l'énergie active consommée chaque minute (en wattheures) dans le ménage par du matériel électrique non mesuré dans les `Sub_metering_1, 2 et 3` est calculé par `(global_active_power*1000/60 - sub_metering_1 - sub_metering_2 - sub_metering_3)`. Donc, je le mets dans la colonne `Sub_metering_4`.
+
+Les données nettoyées sont présenté ici.
+<img src="./data/output/images/cleaned_data.png">
