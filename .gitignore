@@ -1,6 +1,7 @@
 # data source
 *.h5
 *.txt
+*.csv
 
 # py cache
 */.ipynb_checkpoints/
