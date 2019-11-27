@@ -90,7 +90,7 @@ J'affiche la même chose dans la dernière semaine. On voit que le modèle est m
 
 ## Prochaines Etapes
 
-Il restes plusieurs choses à améliorer.
+Il reste plusieurs choses à améliorer.
 
 1. choisir les méthodes différentes pour standaliser et normaliser les données
 
