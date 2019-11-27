@@ -98,3 +98,5 @@ train, valid = train_valid_diviser(day_df.values)
 train_conso = train[:,0]
 valid_conso = valid[:,0]
 step_model, pred = model_prediction(LinearRegression(), train_conso, valid_conso, stride=7)
+with open('../data/output/step_model.pkl', 'wb') as f:
+    pickle.dump(step_model, f)
