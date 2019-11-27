@@ -4,6 +4,7 @@ import pandas as pd
 from sklearn.preprocessing import StandardScaler, MinMaxScaler
 from sklearn.pipeline import Pipeline
 from sklearn.linear_model import LinearRegression
+import pickle
 
 import matplotlib.pyplot as plt
 
@@ -72,32 +73,28 @@ def recursive_multi_step_forecasting(model, feature):
     return np.array(pred_sequence)
 
 def model_prediction(model, train, valid, stride=7):
-    '''
-    prédire les résultat basé sur l'ensemble de train, et elle peut valider par l'ensemble de validation
-
-    Parameters:
-    -- model - sklearn model
-    -- train, valid - np array avec 2 dimensions
-    -- stride - le nombre de jours prédit dans chaque itération
-    '''
     history = list(train)
     pred = []
     
+    # train the model
+    train_x, train_y = feature_target_split(history, stride)
+    step_model = create_step_model(model)
+    step_model.fit(train_x, train_y)
+    
     for i in range(0,len(valid),stride):
-        train_x, train_y = feature_target_split(history, stride)
-        step_model = create_step_model(model)
-        step_model.fit(train_x, train_y)
         pred_sequence = recursive_multi_step_forecasting(step_model, train_x[-1, :])
-        
         pred.append(pred_sequence)
         # get real observation and add to history for predicting the next day
         history.append(valid[i])
+        train_x, train_y = feature_target_split(history, stride)
     
-    return np.array(pred).flatten()
+    return step_model, np.array(pred).flatten()
+
+# ==============================================
 
 day_df = pd.read_csv('../data/output/day_cleaned_household_power_consumption.csv', header=0, 
                     infer_datetime_format=True, parse_dates=['datetime'], index_col=['datetime'])
 train, valid = train_valid_diviser(day_df.values)
 train_conso = train[:,0]
 valid_conso = valid[:,0]
-pred = model_prediction(LinearRegression(), train_conso, valid_conso, stride=7)
+step_model, pred = model_prediction(LinearRegression(), train_conso, valid_conso, stride=7)
