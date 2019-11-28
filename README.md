@@ -23,17 +23,17 @@ Je veux créer un modèle de Machine Learning à résoudre un problème.
 **Quelle est la consommation électrique prévue pour la semaine à venir?** 
 
 ## Nettoyage les données
-Avant de créer le modèle, il faut assurer que les données sont propre. Donc, je commence par nettoyer les données.
+Avant de créer le modèle, il faut assurer que les données sont propre. Donc, je commence à nettoyer les données.
 
 D'abord, je **fusionne les prémière et deuxième colonnes dans une colonne**. La nouvelle colonne doit être dans le format `datetime`. Elle est aussi l'indice de données. C'est pour facilité de traitement.
 
-Ensuite, je **remplis les valeurs manquantes** qui sont indiqué par le fournisseur.
+Ensuite, je **remplis les valeurs manquantes** qui sont indiqué par le fournisseur de données.
 
 <img src="./data/output/images/missing_value.png">
 
-Donc, je remplis ces valeurs manquantes par les mêmes données de la même heure la veille.
+Je remplis ces valeurs manquantes par les mêmes données de la même heure la veille.
 
-A la fin, je **créer la colonne `Sub_metering_4`**. Le fournisseur a aussi indiqué que l'énergie active consommée chaque minute (en wattheures) dans le ménage par du matériel électrique non mesuré dans les `Sub_metering_1, 2 et 3` est calculé par `(global_active_power*1000/60 - sub_metering_1 - sub_metering_2 - sub_metering_3)`. Donc, je le mets dans la colonne `Sub_metering_4`.
+A la fin, je **crée la colonne `Sub_metering_4`**. Le fournisseur a aussi indiqué que l'énergie active consommée chaque minute (en wattheures) dans le ménage non mesuré dans les `Sub_metering_1, 2 et 3` est calculé par `(global_active_power*1000/60 - sub_metering_1 - sub_metering_2 - sub_metering_3)`. Donc, je la mets dans la colonne `Sub_metering_4`.
 
 Les données nettoyées sont présenté ici.
 <img src="./data/output/images/cleaned_data.png">
@@ -60,7 +60,7 @@ Je veux créer un modèle de Machine Learning à predire la consommation électr
 
 Je utilise les données des **trois premières années** pour l'entrainement du modèle et **la dernière année** pour l'évaluation du modèle.
 
-Les données d'un ensemble de données seront divisées en semaines. Ce sont des semaines qui commencent un dimanche et se terminent un samedi. Donc, pour l'ensemble de train, il y a 159 semaines, et l'ensemble de test a 46 semaines.
+Les données seront divisées en semaines. Ce sont des semaines qui commencent un dimanche et se terminent un samedi. Donc, pour l'ensemble de train, il y a 159 semaines, et l'ensemble de validation a 46 semaines.
 
 ### créer l'algo `Recursive Multi-Step Forecasting`
 
@@ -68,7 +68,7 @@ En gros, cette algo utilise le modèle fait une prédiction pour un pas de temps
 
 ![](./data/output/images/algo.png)
 
-Dans ce projet, un pas de temps est une semaine. Par example, j'utilise les données d'une semaine pour faire une prédiction sur le prochain Dimanche. 
+Dans ce projet, un pas de temps est une semaine. Par exemple, j'utilise les données d'une semaine pour faire une prédiction sur le prochain Dimanche. 
 
 Le modèle est un modèle supervisé. Je choisis `Regression Linéaire` qui est simple et interprétable. D'ailleurs, j'ajoute 2 couches avant le modèle pour standaliser et normaliser les données d'entrée.
 
@@ -80,11 +80,11 @@ Le modèle utilisé dans l'algo est entraîné par l'ensemble de train (les donn
 
 J'affiche la prédiction et la consommation réelle dans la dernier année. On voit que elles sont proche. 
 
-Mais, la prédiction sont retardée par rapport à la consommation. Par example, la consommation descend plus tôt que la prédiction entre Juin et Août. Je crois le fait que la prédiction est basé sur les données une semaine pose ce problème. Si on choisit un mois de données, les deux courbes vont être plus proche. 
+Mais, la prédiction sont retardée par rapport à la consommation. Par exemple, la consommation descend plus tôt que la prédiction entre Juin et Août. Je crois c'est que le fait que la prédiction est basé sur les données une semaine qui pose ce problème. Si on choisit un mois de données, les deux courbes vont être plus proche. 
 
 ![](./data/output/images/pred_year.png)
 
-J'affiche la même chose dans la dernière semaine. On voit que le modèle est mal à predire la consommation de Samedi et Dimanche.
+J'affiche aussi la prédiction et la consommation réelle dans la dernière semaine. On voit que le modèle est mal à predire la consommation de Samedi et Dimanche.
 
 ![](./data/output/images/pred_week.png)
 
@@ -94,8 +94,16 @@ Il reste plusieurs choses à améliorer.
 
 1. choisir les méthodes différentes pour standaliser et normaliser les données
 
-2. choisir une période différente, un mois par example, pour faire la prédiction
+2. choisir une période différente, un mois par exemple, pour faire la prédiction
 
 3. choisir les modèles différents et trouver les paramètres optimals dans les modèles.
 
-4. Appliquer un l'algo différent pour résoudre ce problème. Par example, CNN-LSTM est un modèle très intéressant.
+4. Appliquer un l'algo différent pour résoudre ce problème. Par exemple, CNN-LSTM est un modèle très intéressant.
+
+## Annexe
+
+Si vous voulez savoir plus de détails de ce projet, vous pouvez regarder les données et les codes dans les dossiers suivants.
+
+* **data** : le dossier qui contient les figures d'analysis et le modèle entraîné
+* **notebooks** : le dossier qui contient les *jupyter notebooks* qui présentent le processus de projet. Touts les détails sont dans ce dossier.
+* **src** : le dossier qui contient les codes pour nettoyer les données, entraîner le modèle, et faire la prédiction. Si vous lancez ces codes, les résultat sont sauvegardés dans [./data/output](./data/output)./data/output par default.

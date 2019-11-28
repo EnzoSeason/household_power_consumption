@@ -43,6 +43,9 @@ def feature_target_split(data, stride = 7):
 def create_step_model(model):
     '''
     ajouter un couche de standardisation et un couche de normalisation avant le modèle de Machine Learning
+
+    Parametres:
+    -- model - le modèle de Sklearn
     '''
     steps = []
     steps.append(('standardize', StandardScaler()))
@@ -54,7 +57,10 @@ def create_step_model(model):
 
 def recursive_multi_step_forecasting(model, feature):
     '''
-    réaliser l'algo Recursive Multi-Step Forecasting
+    réaliser l'algo Recursive Multi-Step Forecasting,
+    la prédiction a la même période que le feature.
+    Par exemple, si les données d'entrée sont les données dans une semaine, 
+    la fonction va prédire les données de la semaine suivante. 
     
     Parameters:
     -- model - le modèle d'un pas du temps
@@ -73,6 +79,15 @@ def recursive_multi_step_forecasting(model, feature):
     return np.array(pred_sequence)
 
 def model_prediction(model, train, valid, stride=7):
+    '''
+    La fonction utilise l'ensemble de train à entraîner le modèle,
+    et l'ensemble de validation à prédire
+
+    Parametres:
+    -- model - le modèle de Sklearn
+    -- train, valid - les données, np.array avec 1 dimension
+    -- stride - la période de la prédiction 
+    '''
     history = list(train)
     pred = []
     
@@ -80,13 +95,13 @@ def model_prediction(model, train, valid, stride=7):
     train_x, train_y = feature_target_split(history, stride)
     step_model = create_step_model(model)
     step_model.fit(train_x, train_y)
+    input_data = train_x[-1, :]
     
     for i in range(0,len(valid),stride):
-        pred_sequence = recursive_multi_step_forecasting(step_model, train_x[-1, :])
+        pred_sequence = recursive_multi_step_forecasting(step_model, input_data)
         pred.append(pred_sequence)
-        # get real observation and add to history for predicting the next day
-        history.append(valid[i])
-        train_x, train_y = feature_target_split(history, stride)
+        # charger les données d'une semaine prochaine pour faire la prédiction suivante
+        input_data = valid[i:i+stride]
     
     return step_model, np.array(pred).flatten()
 
@@ -98,5 +113,9 @@ train, valid = train_valid_diviser(day_df.values)
 train_conso = train[:,0]
 valid_conso = valid[:,0]
 step_model, pred = model_prediction(LinearRegression(), train_conso, valid_conso, stride=7)
+# sauvegarder les résultats
 with open('../data/output/step_model.pkl', 'wb') as f:
     pickle.dump(step_model, f)
+np.savetxt('../data/output/training_set.csv', train_conso, delimiter=",")
+np.savetxt('../data/output/validation_set.csv', valid_conso, delimiter=",")
+np.savetxt('../data/output/prediction.csv', pred, delimiter=",")
