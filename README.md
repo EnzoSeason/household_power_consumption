@@ -106,4 +106,4 @@ Si vous voulez savoir plus de détails de ce projet, vous pouvez regarder les do
 
 * **data** : le dossier qui contient les figures d'analysis et le modèle entraîné
 * **notebooks** : le dossier qui contient les *jupyter notebooks* qui présentent le processus de projet. Touts les détails sont dans ce dossier.
-* **src** : le dossier qui contient les codes pour nettoyer les données, entraîner le modèle, et faire la prédiction. Si vous lancez ces codes, les résultat sont sauvegardés dans [./data/output](./data/output)./data/output par default.
+* **src** : le dossier qui contient les codes pour nettoyer les données, entraîner le modèle, et faire la prédiction. Si vous lancez ces codes, les résultat sont sauvegardés dans [./data/output](./data/output) par default.
