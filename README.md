@@ -54,7 +54,9 @@ D'ailleurs, je aussi analyse la saisonnalité. Je trouve que `Global_active_powe
 
 ## Création du modèle de Machine Learning
 
-Je veux créer un modèle de Machine Learning à predire la consommation électrique prévue pour la semaine à venir. Je sépare cette tâche dans 3 partie.
+Je veux créer un modèle de Machine Learning à predire la consommation électrique prévue pour la semaine à venir. Je concentre sur `Global_active_power` dans l'étude suivante. 
+
+En gros, je sépare cette tâche dans 3 partie.
 
 ### transformer les données
 
@@ -78,13 +80,13 @@ Le modèle utilisé dans l'algo est entraîné par l'ensemble de train (les donn
 
 ## Résultats
 
-J'affiche la prédiction et la consommation réelle dans la dernier année. On voit que elles sont proche. 
+Dans ce projet, je choisis `Global_active_power` comme la consommation. J'affiche la prédiction et la consommation réelle dans la dernier année. On voit que elles sont proche. 
 
-Mais, la prédiction sont retardée par rapport à la consommation. Par exemple, la consommation descend plus tôt que la prédiction entre Juin et Août. Je crois c'est que le fait que la prédiction est basé sur les données une semaine qui pose ce problème. Si on choisit un mois de données, les deux courbes vont être plus proche. 
+Mais, la prédiction sont retardée par rapport à la consommation. Par exemple, la consommation descend plus tôt que la prédiction en Août. Je crois c'est que le fait que la prédiction est basé sur les données une semaine qui pose ce problème. Si on choisit un mois de données, les deux courbes vont être plus proche. 
 
 ![](./data/output/images/pred_year.png)
 
-J'affiche aussi la prédiction et la consommation réelle dans la dernière semaine. On voit que le modèle est mal à predire la consommation de Samedi et Dimanche.
+J'affiche aussi la prédiction et la consommation réelle dans la dernière semaine. On voit que le modèle est mal à predire la consommation de Samedi, Dimanche, Mardi et Mecredi. Si on veut mieux prédire la consommation d'une semaine, on peut essayer de créer le modèle basé sur la somme de chaque heure, et ça nous donne plus des informations.
 
 ![](./data/output/images/pred_week.png)
 
