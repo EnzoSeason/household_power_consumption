@@ -86,9 +86,12 @@ Mais, la prédiction sont retardée par rapport à la consommation. Par exemple,
 
 ![](./data/output/images/pred_year.png)
 
-J'affiche aussi la prédiction et la consommation réelle dans la dernière semaine. On voit que le modèle est mal à predire la consommation de Samedi, Dimanche, Mardi et Mecredi. Si on veut mieux prédire la consommation d'une semaine, on peut essayer de créer le modèle basé sur la somme de chaque heure, et ça nous donne plus des informations.
 
-![](./data/output/images/pred_week.png)
+A la fin, j'affiche la somme de consommation chaque jour dans la semaine suivante pour répondre la question. *Quelle est la consommation électrique prévue pour la semaine à venir?*
+
+![](./data/output/images/gap_pred.png)
+
+
 
 ## Prochaines Etapes
 
